@@ -1,0 +1,20 @@
+trigger:
+  branches:
+    include:
+      - master
+
+pool: Adrian-PC
+
+steps:
+- task: CopyFiles@2
+  inputs:
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+     artifactName: drop
+     
+# Build the Docker image
+- task: Docker@2
+  inputs:
+    command: 'build'
+    Dockerfile: '**/Dockerfile'
